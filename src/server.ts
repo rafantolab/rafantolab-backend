@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 let server: Server;
-const DB_URL : string = process.env.DB_URL;
+const DB_URL = process.env.DB_URL as string;
 
 const startServer = async() => {
     try {
