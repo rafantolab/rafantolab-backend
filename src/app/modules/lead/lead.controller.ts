@@ -4,7 +4,7 @@ import { transporter } from "../../config/email";
 
 const createLead = async (req: Request, res: Response) => {
     try {
-        const { name, email, phone, service, message, honeypot } = req.body;
+        const { name, email, phone, service, budget, message, honeypot } = req.body;
         // console.log(req.body);
 
         if (honeypot) {
@@ -13,7 +13,7 @@ const createLead = async (req: Request, res: Response) => {
             });
         }
 
-        const lead = new Lead({ name, email, phone, service, message });
+        const lead = new Lead({ name, email, phone, service, budget, message });
         const savedLead = await lead.save();
 
         await transporter.sendMail({
@@ -26,6 +26,7 @@ const createLead = async (req: Request, res: Response) => {
                 <p><b>Email:</b> ${email}</p>
                 <p><b>Phone:</b> ${phone}</p>
                 <p><b>Service:</b> ${service}</p>
+                <p><b>Budget:</b> ${budget}</p>
                 <p><b>Message:</b><br/>${message}</p>
             `,
         });
