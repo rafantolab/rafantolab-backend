@@ -3,7 +3,7 @@ import cors from "cors";
 import { LeadRoutes } from "./app/modules/lead/lead.route";
 
 const app = express();
-
+app.use(cors())
 const allowedOrigins = [
     "http://localhost:3000",
     "https://rafantolab.onrender.com",
