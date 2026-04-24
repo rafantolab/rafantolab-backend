@@ -43,7 +43,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.options("*", (0, cors_1.default)(corsOptions));
+app.options("/{*path}", (0, cors_1.default)(corsOptions));
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.use("/api/v1", lead_route_1.LeadRoutes);

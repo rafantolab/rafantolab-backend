@@ -17,7 +17,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config();
 const DB_URL = process.env.DB_URL;
-// Cache connection across serverless invocations
 let isConnected = false;
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     if (isConnected)
@@ -26,6 +25,5 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     isConnected = true;
     console.log('Connected to DB');
 });
-// Connect on first invocation
 connectDB().catch(console.error);
 exports.default = app_1.default;

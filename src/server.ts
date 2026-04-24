@@ -6,18 +6,15 @@ dotenv.config();
 
 const DB_URL = process.env.DB_URL as string;
 
-// Cache connection across serverless invocations
 let isConnected = false;
 
 const connectDB = async () => {
     if (isConnected) return;
-    
     await mongoose.connect(DB_URL);
     isConnected = true;
     console.log('Connected to DB');
 };
 
-// Connect on first invocation
 connectDB().catch(console.error);
 
 export default app;
