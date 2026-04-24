@@ -9,25 +9,23 @@ const allowedOrigins = [
     "https://rafantolab.onrender.com",
     "https://www.rafantolab.com",
     "https://rafantolab.vercel.app",
-    "https://rafantolab.vercel.app/",
 ];
 
-app.options("*", cors());
-
-app.use(
-  cors({
+const corsOptions: cors.CorsOptions = {
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.some(o => origin.startsWith(o))) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.some(o => origin.startsWith(o))) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
-  })
-);
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use("/api/v1", LeadRoutes);
