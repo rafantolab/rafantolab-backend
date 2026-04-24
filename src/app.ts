@@ -9,6 +9,7 @@ const allowedOrigins = [
     "https://rafantolab.onrender.com",
     "https://www.rafantolab.com",
     "https://rafantolab.vercel.app",
+    "https://rafantolab.vercel.app/",
 ];
 
 app.use(cors({
@@ -16,7 +17,7 @@ app.use(cors({
         // allow requests with no origin (like Postman)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+        if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
@@ -27,6 +28,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.options("*", cors());
 
 app.use("/api/v1", LeadRoutes);
 
