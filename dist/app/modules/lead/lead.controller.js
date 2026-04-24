@@ -14,14 +14,14 @@ const lead_model_1 = require("./lead.model");
 const email_1 = require("../../config/email");
 const createLead = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, email, phone, service, message, honeypot } = req.body;
+        const { name, email, phone, service, budget, message, honeypot } = req.body;
         // console.log(req.body);
         if (honeypot) {
             return res.status(400).json({
                 error: "Spam Detected",
             });
         }
-        const lead = new lead_model_1.Lead({ name, email, phone, service, message });
+        const lead = new lead_model_1.Lead({ name, email, phone, service, budget, message });
         const savedLead = yield lead.save();
         yield email_1.transporter.sendMail({
             from: `"Rafantolab" <${process.env.GMAIL_USER}>`,
@@ -33,6 +33,7 @@ const createLead = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 <p><b>Email:</b> ${email}</p>
                 <p><b>Phone:</b> ${phone}</p>
                 <p><b>Service:</b> ${service}</p>
+                <p><b>Budget:</b> ${budget}</p>
                 <p><b>Message:</b><br/>${message}</p>
             `,
         });

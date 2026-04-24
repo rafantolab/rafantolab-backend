@@ -7,6 +7,7 @@ const leadSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     phone: { type: String, required: true },
     service: { type: String, required: true },
+    budget: { type: String, required: true },
     message: { type: String, required: true }
 }, {
     timestamps: true,
