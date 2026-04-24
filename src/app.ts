@@ -8,6 +8,7 @@ const allowedOrigins = [
     "http://localhost:3000",
     "https://rafantolab.onrender.com",
     "https://www.rafantolab.com",
+    "https://rafantolab.vercel.app/",
 ];
 
 app.use(cors({
