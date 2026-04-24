@@ -22,5 +22,17 @@ const startServer = async() => {
     }
 }
 
+export default (req: any, res: any) => {
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    return res.status(200).end();
+  }
+
+  return app(req, res);
+};
+
 startServer();
 
