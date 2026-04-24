@@ -16,18 +16,16 @@ const app_1 = __importDefault(require("./app"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config();
-let server;
 const DB_URL = process.env.DB_URL;
-const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(DB_URL);
-        console.log('Connected to DB');
-        server = app_1.default.listen(process.env.PORT, () => {
-            console.log('Server is running');
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
+// Cache connection across serverless invocations
+let isConnected = false;
+const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (isConnected)
+        return;
+    yield mongoose_1.default.connect(DB_URL);
+    isConnected = true;
+    console.log('Connected to DB');
 });
-startServer();
+// Connect on first invocation
+connectDB().catch(console.error);
+exports.default = app_1.default;

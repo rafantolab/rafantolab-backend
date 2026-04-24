@@ -1,27 +1,23 @@
-import {Server} from 'http'
 import app from './app';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 dotenv.config();
 
-let server: Server;
 const DB_URL = process.env.DB_URL as string;
 
-const startServer = async() => {
-    try {
-        await mongoose.connect(DB_URL)
+// Cache connection across serverless invocations
+let isConnected = false;
 
-        console.log('Connected to DB');
+const connectDB = async () => {
+    if (isConnected) return;
+    
+    await mongoose.connect(DB_URL);
+    isConnected = true;
+    console.log('Connected to DB');
+};
 
-        server = app.listen(process.env.PORT, () => {
-            console.log('Server is running');
-        })
-    } catch (error) {
-        console.log(error);
-    }
-}
+// Connect on first invocation
+connectDB().catch(console.error);
 
-
-startServer();
-
+export default app;
